@@ -1,19 +1,8 @@
 import Link from "next/link";
 
-async function getData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-    cache: "no-store", 
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return res.json();
-}
-
 export default async function ServerSidePage() {
-  const data = await getData();
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await res.json()
 
   return (
     <div style={{ padding: '20px' }}>
@@ -34,7 +23,7 @@ export default async function ServerSidePage() {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => ( 
+          {data.map((item) => (
             <tr key={item.id} style={{ borderBottom: '1px solid #ddd' }}>
               <td style={{ padding: '8px', textAlign: 'center' }}>{item.id}</td>
               <td style={{ padding: '8px' }}>{item.title}</td>
